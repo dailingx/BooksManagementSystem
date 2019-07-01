@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dxl.core.dao.BookDao">
+	<!-- SQL片段 -->
+	<sql id="selectBookListWhere">
+		<where>
+		    	<if test="book_name!=null">
+		    		book_name LIKE '%${book_name}%'
+		    	</if>
+		    </where>
+	</sql>
+	
+	<select id="selectBookList" parameterType="book" resultType="book">
+			select * from book_info
+		    <include refid="selectBookListWhere"></include>
+		    <!-- 分页 -->
+		    <if test="start!=null and rows!=null">
+		    	LIMIT #{start}, #{rows}
+		    </if>
+	</select>
+	
+	<select id="selectBookListCount" parameterType="book" resultType="Integer">
+		select count(*) from book_info
+		<include refid="selectBookListWhere"></include>
+	</select>
+	
+	<insert id="createBook" parameterType="book">
+	    insert into book_info(
+						  book_name,
+						  book_author,
+						  book_press,
+						  book_presstime,
+						  book_price,
+						  book_number,
+						  book_location
+	             )
+	             values(#{book_name},
+	                    #{book_author},
+	                    #{book_press},
+	                    #{book_presstime},
+	                    #{book_price},
+	                    #{book_number},
+	                    #{book_location}
+	            )
+	</insert>
+	
+	<select id="getBookById" parameterType="Integer" 
+	resultType="book">
+	    select * from book_info where book_id = #{id}
+	</select>
+	
+	<update id="updateBook" parameterType="book">
+	    update book_info
+	    <set>
+	        <if test="book_name!=null">
+	            book_name=#{book_name},
+	        </if>
+	        <if test="book_author!=null">
+	            book_author=#{book_author},
+	        </if>
+	        <if test="book_press!=null">
+	            book_press=#{book_press},
+	        </if>
+	        <if test="book_presstime!=null">
+	            book_presstime=#{book_presstime},
+	        </if>
+	        <if test="book_price!=null">
+	            book_price=#{book_price},
+	        </if>
+	        <if test="book_number!=null">
+	            book_number=#{book_number},
+	        </if>
+	        <if test="book_location!=null">
+	            book_location=#{book_location}
+	        </if>
+	    </set>
+	    where book_id=#{book_id}
+	</update>
+	
+	<delete id="deleteBook" parameterType="Integer">
+	    delete from book_info where book_id=#{id}
+	</delete>
+
+</mapper>

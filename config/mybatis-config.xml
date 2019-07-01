@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+	<!-- 别名定义,别名不区分大小写 -->
+	<typeAliases>
+		<!-- 配置扫描包形式，别名就是类首字母小写 -->
+		<package name="com.dxl.core.po" />
+	</typeAliases>
+</configuration>
